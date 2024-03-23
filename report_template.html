@@ -83,7 +83,7 @@
         <h2>{{.Content}}</h2> 
    
 
-        <table id="myTable">
+        <table id="myTable1">
             <thead>
                 <tr>
                     <th>No.</th>
@@ -93,54 +93,98 @@
                 </tr>
             </thead>
             <tbody>
+                {{range $i, $item:= .DemoItems}}
                 <tr>
-                    <td>1</td>
-                    <td>Exam 1</td>
-                    <td>Value 1</td>
-                    <td>Description 1 Description 1 Description 1 Description 1 Description 1 Description 1 Description 1</td>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
                 </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
                 <tr>
-                    <td>2</td>
-                    <td>Exam 2</td>
-                    <td>Value 2</td>
-                    <td>Description 2</td>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
                 </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
                 <tr>
-                    <td>3</td>
-                    <td>Exam 3</td>
-                    <td>Value 3</td>
-                    <td>Description 3</td>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
                 </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
                 <tr>
-                    <td>4</td>
-                    <td>Exam 4</td>
-                    <td>Value 4</td>
-                    <td>Description 4</td>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
                 </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
                 <tr>
-                    <td>5</td>
-                    <td>Exam 5</td>
-                    <td>Value 5</td>
-                    <td>Description 5</td>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
                 </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
                 <tr>
-                    <td>6</td>
-                    <td>Exam 6</td>
-                    <td>Value 6</td>
-                    <td>Description 6</td>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
                 </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
                 <tr>
-                    <td>7</td>
-                    <td>Exam 7</td>
-                    <td>Value 7</td>
-                    <td>Description 7</td>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
                 </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
                 <tr>
-                    <td>8</td>
-                    <td>Exam 8</td>
-                    <td>Value 8</td>
-                    <td>Description 8</td>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
                 </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
+                <tr>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
+                </tr>
+                {{end}}
             </tbody>
         </table>
     </div>
@@ -148,7 +192,8 @@
 </body>
 <script>
     function repeatTableHeader() {
-        var table = document.getElementById("myTable");
+        // var table = document.getElementById("myTable1");
+        var tables = document.querySelectorAll("table");
         var headerClone = table.querySelector("thead").cloneNode(true);
         var tableRows = table.querySelectorAll("tbody tr");
 

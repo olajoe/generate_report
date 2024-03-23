@@ -4,31 +4,27 @@ import (
 	"bytes"
 	"context"
 	"html/template"
-	"io/ioutil"
 	"log"
-	"time"
+	"os"
 
 	"github.com/chromedp/cdproto/page"
 	"github.com/chromedp/chromedp"
 )
 
+type ReportItem struct {
+	Examination string
+	Value       string
+	Description string
+}
+
 type PageData struct {
-	Title      string
-	Content    string
-	PageNumber int
+	Title     string
+	Content   string
+	DemoItems []ReportItem
 }
 
 func main() {
-	longContent := `
-       This is a long content...
-			 มีภาษาไทยนะจ๊ะ สวัสดีครับท่านผู้ชม ทั่วไป
-    `
-
-	data := PageData{
-		Title:      "Sample Report",
-		Content:    longContent,
-		PageNumber: 1,
-	}
+	data := constructData()
 
 	htmlContent, err := renderHTML(data)
 	if err != nil {
@@ -40,6 +36,60 @@ func main() {
 	}
 
 	log.Println("PDF report generated successfully.")
+}
+
+func constructData() PageData {
+	return PageData{
+		Title:   "Sample Report",
+		Content: "This is a long content...",
+		DemoItems: []ReportItem{
+			{
+				Examination: "Blood Pressure",
+				Value:       "120/80",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "Heart Rate",
+				Value:       "72",
+				Description: "Description naja eiei Description naja eiei2 Description naja eiei3",
+			},
+			{
+				Examination: "Temperature",
+				Value:       "36.5",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "Weight",
+				Value:       "67",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "Height",
+				Value:       "171",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "BMI",
+				Value:       "22.9",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "Blood Sugar",
+				Value:       "90",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "Cholesterol",
+				Value:       "200",
+				Description: "Description naja eiei",
+			},
+			{
+				Examination: "Uric Acid",
+				Value:       "5.5",
+				Description: "Description naja eiei",
+			},
+		},
+	}
 }
 
 func renderHTML(data PageData) (string, error) {
@@ -59,14 +109,14 @@ func generatePDF(htmlContent string) error {
 	ctx, cancel := chromedp.NewContext(context.Background())
 	defer cancel()
 
-	time.Sleep(2 * time.Second)
+	// time.Sleep(2 * time.Second)
 
 	var buf []byte
 	if err := chromedp.Run(ctx, printToPDF(htmlContent, &buf)); err != nil {
 		return err
 	}
 
-	if err := ioutil.WriteFile("report.pdf", buf, 0644); err != nil {
+	if err := os.WriteFile("report.pdf", buf, 0644); err != nil {
 		return err
 	}
 
