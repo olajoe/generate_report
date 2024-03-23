@@ -5,19 +5,20 @@
     <title>{{.Title}}</title>
     <link href='https://fonts.googleapis.com/css?family=Sarabun' rel='stylesheet'>
     <style>
-        /* Page setup */
         @page {
             size: A4;
-            margin: 2cm;
+            margin: 1.67cm;
+        }
+        html {
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
         }
         body {
             font-family: 'Sarabun', sans-serif;
             margin: 0;
             padding: 0;
         }
-        /* Header */
         .header {
-            /* position: fixed; */
             top: 0;
             left: 0;
             right: 0;
@@ -25,7 +26,6 @@
             padding: 10px;
             background-color: #f0f0f0;
         }
-        /* Table */
        table {
             width: 100%;
             border-collapse: collapse;
@@ -40,16 +40,16 @@
             overflow: hidden;
         }
         th {
-            background-color: #f2f2f2;
+            background-color: aqua;
+            color: black;
         }
-        /* Content */
+        tr:nth-child(even){background-color: #f2f2f2}
         .content {
             font-size: 10px;
             margin-top: 20px; /* Adjusted to accommodate the header height */
             margin-bottom: 100px;
             padding: 20px;
         }
-        /* Page break */
         .page-break {
             page-break-after: always;
         }
@@ -83,26 +83,7 @@
         <h2>{{.Content}}</h2> 
    
 
-        <table id="myTable1">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Examination</th>
-                    <th>Value</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range $i, $item:= .DemoItems}}
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>{{.Examination}}</td>
-                    <td>{{.Value}}</td>
-                    <td>{{.Description}}</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
+        <h2>Table topic1</h2>
 
         <table>
             <thead>
@@ -116,7 +97,7 @@
             <tbody>
                 {{range $i, $item:= .DemoItems}}
                 <tr>
-                    <td>{{$i}}</td>
+                    <td>{{add $i 1}}</td>
                     <td>{{.Examination}}</td>
                     <td>{{.Value}}</td>
                     <td>{{.Description}}</td>
@@ -125,88 +106,59 @@
             </tbody>
         </table>
 
+        <h2>Table topic2</h2>
         <table>
             <thead>
                 <tr>
                     <th>No.</th>
                     <th>Examination</th>
                     <th>Value</th>
+                    <th>Unit</th>
+                    <th>Normal</th>
                     <th>Description</th>
                 </tr>
             </thead>
             <tbody>
-                {{range $i, $item:= .DemoItems}}
+                {{range $i, $item:= .DemoWithUnitAndNormal}}
                 <tr>
-                    <td>{{$i}}</td>
+                    <td>{{add $i 1}}</td>
                     <td>{{.Examination}}</td>
                     <td>{{.Value}}</td>
+                    <td>{{.Unit}}</td>
+                    <td>{{.Normal}}</td>
                     <td>{{.Description}}</td>
                 </tr>
                 {{end}}
             </tbody>
         </table>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Examination</th>
-                    <th>Value</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range $i, $item:= .DemoItems}}
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>{{.Examination}}</td>
-                    <td>{{.Value}}</td>
-                    <td>{{.Description}}</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Examination</th>
-                    <th>Value</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range $i, $item:= .DemoItems}}
-                <tr>
-                    <td>{{$i}}</td>
-                    <td>{{.Examination}}</td>
-                    <td>{{.Value}}</td>
-                    <td>{{.Description}}</td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
     </div>
     <div class="page-break"></div>
 </body>
+
 <script>
     function repeatTableHeader() {
-        // var table = document.getElementById("myTable1");
         var tables = document.querySelectorAll("table");
-        var headerClone = table.querySelector("thead").cloneNode(true);
-        var tableRows = table.querySelectorAll("tbody tr");
 
-        tableRows.forEach(function(row, index) {
-            // Check if row will cause a page break
-            if (row.offsetTop + row.offsetHeight > (index + 1) * 792) { // Assuming A4 page height in px
-                var newHeader = headerClone.cloneNode(true);
-                table.insertBefore(newHeader, row);
-            }
+        tables.forEach(function(table) {
+            var headerClone = table.querySelector("thead").cloneNode(true);
+            var tableRows = table.querySelectorAll("tbody tr");
+
+            tableRows.forEach(function(row, index) {
+                if (row.offsetTop + row.offsetHeight > (index + 1) * 792) { // Assuming A4 page height in px
+                    var newHeader = headerClone.cloneNode(true);
+                    table.insertBefore(newHeader, row);
+                    headerClone = table.querySelector("thead").cloneNode(true); // Update the cloned header for the next iteration
+                }
+            });
         });
     }
+
     window.onload = function() {
         repeatTableHeader();
     }
 </script>
+
+
+
 </html>
