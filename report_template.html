@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+    <link href='https://fonts.googleapis.com/css?family=Sarabun' rel='stylesheet'>
+    <style>
+        /* Page setup */
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        body {
+            font-family: 'Sarabun', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* Header */
+        .header {
+            /* position: fixed; */
+            top: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+        /* Table */
+       table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+            word-wrap: break-word;
+            max-width: 50px; /* Set a max width for the cells */
+            overflow: hidden;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        /* Content */
+        .content {
+            font-size: 10px;
+            margin-top: 20px; /* Adjusted to accommodate the header height */
+            margin-bottom: 100px;
+            padding: 20px;
+        }
+        /* Page break */
+        .page-break {
+            page-break-after: always;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{.Title}}</h1>
+    </div>
+    <div class="content">
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+        <h2>{{.Content}}</h2> 
+   
+
+        <table id="myTable1">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
+                <tr>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
+                <tr>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
+                <tr>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
+                <tr>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Examination</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $i, $item:= .DemoItems}}
+                <tr>
+                    <td>{{$i}}</td>
+                    <td>{{.Examination}}</td>
+                    <td>{{.Value}}</td>
+                    <td>{{.Description}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+    <div class="page-break"></div>
+</body>
+<script>
+    function repeatTableHeader() {
+        // var table = document.getElementById("myTable1");
+        var tables = document.querySelectorAll("table");
+        var headerClone = table.querySelector("thead").cloneNode(true);
+        var tableRows = table.querySelectorAll("tbody tr");
+
+        tableRows.forEach(function(row, index) {
+            // Check if row will cause a page break
+            if (row.offsetTop + row.offsetHeight > (index + 1) * 792) { // Assuming A4 page height in px
+                var newHeader = headerClone.cloneNode(true);
+                table.insertBefore(newHeader, row);
+            }
+        });
+    }
+    window.onload = function() {
+        repeatTableHeader();
+    }
+</script>
+</html>
